@@ -1,0 +1,86 @@
+define([
+	'jquery',
+    'underscore',
+    'backbone',
+    'backboneParams',
+    ], function($, _, Backbone, backboneParams){
+
+	var Router = Backbone.Router.extend({
+			routes: {				
+				"/":"root",
+				"":"root",
+				"new":"editBook",
+				"edit/:id":"editBook",
+				"search/:name":"findbyName"
+			}
+		});
+
+		var initialize = function(){			
+
+			router = new Router;	
+			router.on('route:root', function(){
+				console.log('ENTRO EN HOME.fff...............');
+				require(['views/BooksList'], 
+				function(bookslist){
+					console.log('ENTRO EN HOME................');
+					Bookslist= new bookslist();
+					//bookslist.render();
+/*					$(document).attr('title', bookslist.getTitle);
+					console.log('We have loaded the page ');*/
+				});				
+			});
+
+
+			//router.on('route:home', function(){
+			/*	require(['views/BooksList'], 
+					function(bookslist){
+						console.log('ENTRO EN HOME................');
+						Bookslist= new bookslist();
+						//bookslist.render();
+						$(document).attr('title', bookslist.getTitle);
+						console.log('We have loaded the page ');
+				});*/
+			//});
+				
+			router.on('route:editBook', function(id){				
+				console.log('called edit');
+				/*editBook.render({id:id});			
+				$(document).attr('title', editBook.getTitle({id:id}));*/
+			});
+					
+			router.on('route:findbyName' , function(name) {
+				console.log('called edit');
+				/*searchList.render({name:name});
+				$(document).attr('title', searchList.getTitle({name:name}));*/
+			});				
+ 	     // Backbone.history.start();
+ 	     //Backbone.history.start({pushState: true});
+ 	      //Backbone.history.navigate('/', true); 	          
+ 	      	  /*Backbone.history.start({pushState: true, root: "/"})
+ 	      	       // All navigation that is relative should be passed through the navigate
+            // method, to be processed by the router. If the link has a `data-bypass`
+            // attribute, bypass the delegation completely.
+            $(document).on("click", "a[href]:not([data-bypass])", function(evt) {
+                // Get the absolute anchor href.
+                var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
+                // Get the absolute root.
+                var root = location.protocol + "//" + location.host + "/";
+
+                // Ensure the root is part of the anchor href, meaning it's relative.
+                if (href.prop.slice(0, root.length) === root) {
+                    // Stop the default event to ensure the link will not cause a page
+                    // refresh.
+                    evt.preventDefault();
+
+                    // `Backbone.history.navigate` is sufficient for all Routers and will
+                    // trigger the correct events. The Router's internal `navigate` method
+                    // calls this anyways.  The fragment is sliced from the root.                    
+                    if(href.attr != '#') 
+                      Backbone.history.navigate(href.attr, true); 
+                 }
+            });*/
+		};			
+		return {
+			initialize: initialize
+		};		
+});
